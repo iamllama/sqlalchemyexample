@@ -72,30 +72,122 @@
     </div>
 
     <div id="Equipment" class="tabcontent">
+    <form method="post" action="/dashboard/home/">
+        {% csrf_token %}
       <table class="mainTable">
           <tr>
-            <td colspan="4" align="right">EDIT</td>
+            <td colspan="15" align="center">EDIT</td>
           </tr>
           <tr>
-            <th>Mode</th>
-            <th>Min</th>
-            <th>Max</th>
-            <th>Output</th>
+              <th>BH Configuration Detail ID</th>
+              <th>BH Configuration Header ID</th>
+              <th>Configuration Name</th>
+              <th>Business Topic</th>
+              <th>Business Attribute</th>
+              <th>Business Attribute Value</th>
+              <th>Business Attribute Range Min</th>
+              <th>Business Attribute Range Max</th>
+              <th>Data Type</th>
+              <th>Output Value</th>
+              <th>Effective Date</th>
+              <th>Expiration Date</th>
+              <th>Hint</th>
+              <th>Org ID</th>
           </tr>
-          <tr>
-            <td>....</td>
-            <td>....</td>
-            <td>....</td>
-            <td>....</td>
-          </tr>
-          <tr>
-            <td>....</td>
-            <td>....</td>
-            <td>....</td>
-            <td>....</td>
-          </tr>
+          {% for d in data %}
+          {% if d.data_type|lower == "none" %}
+              <tr>
+                  <td><input type="text" value="{{d.bh_configuration_detail_id}}" name="configuration_detail_id" ></td>
+                  <td><input type="text" value="{{d.bh_configuration_header_id}}" name="bh_configuration_header_id" ></td>
+                  <td><input type="text" name="configuration_name" value="{{d.configuration_name}}"></td>
+                  <td><input type="text" name="business_topic" value="{{d.business_topic}}" ></td>
+                  <td><input type="text" name="business_attribute" values="{{d.business_attribute}}" ></td>
+                  <td><input type="text" name="business_attribute_value" value="{{d.business_attribute_value}}" ></td>
+                  <td><input type="text" value="{{d.business_attribute_range_min}}" name="min" id="min"></td>
+                  <td><input type="text" value="{{d.business_attribute_range_max}}" name="max" id="max"></td>
+                  <td><input type="text" name="data_type" value="{{d.data_type}}" ></td>
+                  <td><input type="text" value="{{d.output_value}}" name="output_value" id="output_value"></td>
+                  <td><input type="text" name="effective_date" value="{{d.effective_date}}"></td>
+                  <td><input type="text" name="expiration_date" value="{{d.expiration_date}}"></td>
+                  <td><input type="text" name="hint" value="{{d.hint}}"></td>
+                  <td><input type="text" name="org_id" value="{{d.org_id}}"></td>
+              </tr>
+            {% elif d.data_type|lower == "text" %}
+              <tr>
+                  <td><input type="text" value="{{d.bh_configuration_detail_id}}" name="configuration_detail_id" ></td>
+                  <td><input type="text" value="{{d.bh_configuration_header_id}}" name="bh_configuration_header_id" ></td>
+                  <td><input type="text" name="configuration_name" value="{{d.configuration_name}}"></td>
+                  <td><input type="text" name="business_topic" value="{{d.business_topic}}" ></td>
+                  <td><input type="text" name="business_attribute" values="{{d.business_attribute}}" ></td>
+                  <td><input type="text" name="business_attribute_value" value="{{d.business_attribute_value}}" ></td>
+                  <td><input type="text" value="{{d.business_attribute_range_min}}" name="min" id="min"></td>
+                  <td><input type="text" value="{{d.business_attribute_range_max}}" name="max" id="max"></td>
+                  <td><input type="text" name="data_type" value="{{d.data_type}}" ></td>
+                  <td><input type="text" value="{{d.output_value}}" name="output_value" id="output_value"></td>
+                  <td><input type="text" name="effective_date" value="{{d.effective_date}}"></td>
+                  <td><input type="text" name="expiration_date" value="{{d.expiration_date}}"></td>
+                  <td><input type="text" name="hint" value="{{d.hint}}"></td>
+                  <td><input type="text" name="org_id" value="{{d.org_id}}"></td>
+              </tr>
+              {% elif d.data_type|lower == "range" %}
+              <tr>
+                  <td><input type="text" value="{{d.bh_configuration_detail_id}}" name="configuration_detail_id" hidden="hidden">...</td>
+                  <td><input type="text" value="{{d.bh_configuration_header_id}}" name="bh_configuration_header_id" hidden="hidden">...</td>
+                  <td><input type="text" name="configuration_name" value="{{d.configuration_name}}" hidden="hidden">...</td>
+                  <td><input type="text" name="business_topic" value="{{d.business_topic}}" hidden="hidden">...</td>
+                  <td><input type="text" name="business_attribute" values="{{d.business_attribute}}" hidden="hidden">...</td>
+                  <td><input type="text" name="business_attribute_value" value="{{d.business_attribute_value}}" hidden="hidden">...</td>
+                  <td><input type="text" value="{{d.business_attribute_range_min}}" name="min" id="min"></td>
+                  <td><input type="text" value="{{d.business_attribute_range_max}}" name="max" id="max"></td>
+                  <td><input type="text" name="data_type" value="{{d.data_type}}" hidden="hidden">...</td>
+                  <td><input type="text" value="{{d.output_value}}" name="output_value" id="output_value"></td>
+                  <td><input type="text" name="effective_date" value="{{d.effective_date}}" hidden="hidden">...</td>
+                  <td><input type="text" name="expiration_date" value="{{d.expiration_date}}" hidden="hidden">...</td>
+                  <td><input type="text" name="hint" value="{{d.hint}}" hidden="hidden">...</td>
+                  <td><input type="text" name="org_id" value="{{d.org_id}}" hidden="hidden">...</td>
+              </tr>
+              {% elif d.data_type|lower == "action" %}
+              <tr>
+                  <td><input type="text" value="{{d.bh_configuration_detail_id}}" name="configuration_detail_id" hidden="hidden">...</td>
+                  <td><input type="text" value="{{d.bh_configuration_header_id}}" name="bh_configuration_header_id" hidden="hidden">...</td>
+                  <td><input type="text" name="configuration_name" value="{{d.configuration_name}}" hidden="hidden">...</td>
+                  <td><input type="text" name="business_topic" value="{{d.business_topic}}" hidden="hidden">...</td>
+                  <td><input type="text" name="business_attribute" values="{{d.business_attribute}}" hidden="hidden">...</td>
+                  <td><input type="text" name="business_attribute_value" value="{{d.business_attribute_value}}" hidden="hidden">...</td>
+                  <td><input type="text" value="{{d.business_attribute_range_min}}" name="min" id="min" hidden="hidden">...</td>
+                  <td><input type="text" value="{{d.business_attribute_range_max}}" name="max" id="max" hidden="hidden">...</td>
+                  <td><input type="text" name="data_type" value="{{d.data_type}}" hidden="hidden">...</td>
+                  <td><input type="text" value="{{d.output_value}}" name="output_value" id="output_value"></td>
+                  <td><input type="text" name="effective_date" value="{{d.effective_date}}" hidden="hidden">...</td>
+                  <td><input type="text" name="expiration_date" value="{{d.expiration_date}}" hidden="hidden">...</td>
+                  <td><input type="text" name="hint" value="{{d.hint}}" hidden="hidden">...</td>
+                  <td><input type="text" name="org_id" value="{{d.org_id}}" hidden="hidden">...</td>
+              </tr>
+              {% elif d.data_type|lower == "float" %}
+              <tr>
+                  <td><input type="text" value="{{d.bh_configuration_detail_id}}" name="configuration_detail_id" hidden="hidden">...</td>
+                  <td><input type="text" value="{{d.bh_configuration_header_id}}" name="bh_configuration_header_id" hidden="hidden">...</td>
+                  <td><input type="text" name="configuration_name" value="{{d.configuration_name}}" hidden="hidden">...</td>
+                  <td><input type="text" name="business_topic" value="{{d.business_topic}}" hidden="hidden">...</td>
+                  <td><input type="text" name="business_attribute" values="{{d.business_attribute}}" hidden="hidden">...</td>
+                  <td><input type="text" name="business_attribute_value" value="{{d.business_attribute_value}}" hidden="hidden">...</td>
+                  <td><input type="text" value="{{d.business_attribute_range_min}}" name="min" id="min" hidden="hidden">...</td>
+                  <td><input type="text" value="{{d.business_attribute_range_max}}" name="max" id="max" hidden="hidden">...</td>
+                  <td><input type="text" name="data_type" value="{{d.data_type}}" hidden="hidden">...</td>
+                  <td><input type="text" value="{{d.output_value}}" name="output_value" id="output_value"></td>
+                  <td><input type="text" name="effective_date" value="{{d.effective_date}}" hidden="hidden">...</td>
+                  <td><input type="text" name="expiration_date" value="{{d.expiration_date}}" hidden="hidden">...</td>
+                  <td><input type="text" name="hint" value="{{d.hint}}" hidden="hidden">...</td>
+                  <td><input type="text" name="org_id" value="{{d.org_id}}" hidden="hidden">...</td>
+              </tr>
+          {% endif %}
+          {% endfor %}
         </table>
-        <table class="mainTable">
+        <input type="text" value="{{d.0}}" id="id" name="id" hidden="hidden">
+        <input type="text" value="equipment" id="table_type" name="table_type" hidden="hidden">
+    <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+        <!--<table class="mainTable">
           <tr>
             <td colspan="4" align="right">EDIT</td>
           </tr>
@@ -113,232 +205,581 @@
             <td>....</td>
             <td>....</td>
           </tr>
-        </table>
+        </table>-->
     </div>
 
     <div id="Execution" class="tabcontent">
+    <form method="post" action="/dashboard/home/">
+        {% csrf_token %}
        <table class="mainTable">
           <tr>
-            <td colspan="4" align="right">EDIT</td>
+            <td colspan="15" align="center">EDIT</td>
           </tr>
           <tr>
-            <th>Mode</th>
-            <th>Min</th>
-            <th>Max</th>
-            <th>Output</th>
+              <th>BH Configuration Detail ID</th>
+              <th>BH Configuration Header ID</th>
+              <th>Configuration Name</th>
+              <th>Business Topic</th>
+              <th>Business Attribute</th>
+              <th>Business Attribute Value</th>
+              <th>Business Attribute Range Min</th>
+              <th>Business Attribute Range Max</th>
+              <th>Data Type</th>
+              <th>Output Value</th>
+              <th>Effective Date</th>
+              <th>Expiration Date</th>
+              <th>Hint</th>
+              <th>Org ID</th>
           </tr>
-          <tr>
-            <td>....</td>
-            <td>....</td>
-            <td>....</td>
-            <td>....</td>
-          </tr>
-          <tr>
-            <td>....</td>
-            <td>....</td>
-            <td>....</td>
-            <td>....</td>
-          </tr>
+          {% for d in data %}
+          {% if d.data_type|lower == "none" %}
+              <tr>
+                  <td><input type="text" value="{{d.bh_configuration_detail_id}}" name="configuration_detail_id" ></td>
+                  <td><input type="text" value="{{d.bh_configuration_header_id}}" name="bh_configuration_header_id" ></td>
+                  <td><input type="text" name="configuration_name" value="{{d.configuration_name}}"></td>
+                  <td><input type="text" name="business_topic" value="{{d.business_topic}}" ></td>
+                  <td><input type="text" name="business_attribute" values="{{d.business_attribute}}" ></td>
+                  <td><input type="text" name="business_attribute_value" value="{{d.business_attribute_value}}" ></td>
+                  <td><input type="text" value="{{d.business_attribute_range_min}}" name="min" id="min"></td>
+                  <td><input type="text" value="{{d.business_attribute_range_max}}" name="max" id="max"></td>
+                  <td><input type="text" name="data_type" value="{{d.data_type}}" ></td>
+                  <td><input type="text" value="{{d.output_value}}" name="output_value" id="output_value"></td>
+                  <td><input type="text" name="effective_date" value="{{d.effective_date}}"></td>
+                  <td><input type="text" name="expiration_date" value="{{d.expiration_date}}"></td>
+                  <td><input type="text" name="hint" value="{{d.hint}}"></td>
+                  <td><input type="text" name="org_id" value="{{d.org_id}}"></td>
+              </tr>
+            {% elif d.data_type|lower == "text" %}
+              <tr>
+                  <td><input type="text" value="{{d.bh_configuration_detail_id}}" name="configuration_detail_id" ></td>
+                  <td><input type="text" value="{{d.bh_configuration_header_id}}" name="bh_configuration_header_id" ></td>
+                  <td><input type="text" name="configuration_name" value="{{d.configuration_name}}"></td>
+                  <td><input type="text" name="business_topic" value="{{d.business_topic}}" ></td>
+                  <td><input type="text" name="business_attribute" values="{{d.business_attribute}}" ></td>
+                  <td><input type="text" name="business_attribute_value" value="{{d.business_attribute_value}}" ></td>
+                  <td><input type="text" value="{{d.business_attribute_range_min}}" name="min" id="min"></td>
+                  <td><input type="text" value="{{d.business_attribute_range_max}}" name="max" id="max"></td>
+                  <td><input type="text" name="data_type" value="{{d.data_type}}" ></td>
+                  <td><input type="text" value="{{d.output_value}}" name="output_value" id="output_value"></td>
+                  <td><input type="text" name="effective_date" value="{{d.effective_date}}"></td>
+                  <td><input type="text" name="expiration_date" value="{{d.expiration_date}}"></td>
+                  <td><input type="text" name="hint" value="{{d.hint}}"></td>
+                  <td><input type="text" name="org_id" value="{{d.org_id}}"></td>
+              </tr>
+              {% elif d.data_type|lower == "range" %}
+              <tr>
+                  <td><input type="text" value="{{d.bh_configuration_detail_id}}" name="configuration_detail_id" hidden="hidden">...</td>
+                  <td><input type="text" value="{{d.bh_configuration_header_id}}" name="bh_configuration_header_id" hidden="hidden">...</td>
+                  <td><input type="text" name="configuration_name" value="{{d.configuration_name}}" hidden="hidden">...</td>
+                  <td><input type="text" name="business_topic" value="{{d.business_topic}}" hidden="hidden">...</td>
+                  <td><input type="text" name="business_attribute" values="{{d.business_attribute}}" hidden="hidden">...</td>
+                  <td><input type="text" name="business_attribute_value" value="{{d.business_attribute_value}}" hidden="hidden">...</td>
+                  <td><input type="text" value="{{d.business_attribute_range_min}}" name="min" id="min"></td>
+                  <td><input type="text" value="{{d.business_attribute_range_max}}" name="max" id="max"></td>
+                  <td><input type="text" name="data_type" value="{{d.data_type}}" hidden="hidden">...</td>
+                  <td><input type="text" value="{{d.output_value}}" name="output_value" id="output_value"></td>
+                  <td><input type="text" name="effective_date" value="{{d.effective_date}}" hidden="hidden">...</td>
+                  <td><input type="text" name="expiration_date" value="{{d.expiration_date}}" hidden="hidden">...</td>
+                  <td><input type="text" name="hint" value="{{d.hint}}" hidden="hidden">...</td>
+                  <td><input type="text" name="org_id" value="{{d.org_id}}" hidden="hidden">...</td>
+              </tr>
+              {% elif d.data_type|lower == "action" %}
+              <tr>
+                  <td><input type="text" value="{{d.bh_configuration_detail_id}}" name="configuration_detail_id" hidden="hidden">...</td>
+                  <td><input type="text" value="{{d.bh_configuration_header_id}}" name="bh_configuration_header_id" hidden="hidden">...</td>
+                  <td><input type="text" name="configuration_name" value="{{d.configuration_name}}" hidden="hidden">...</td>
+                  <td><input type="text" name="business_topic" value="{{d.business_topic}}" hidden="hidden">...</td>
+                  <td><input type="text" name="business_attribute" values="{{d.business_attribute}}" hidden="hidden">...</td>
+                  <td><input type="text" name="business_attribute_value" value="{{d.business_attribute_value}}" hidden="hidden">...</td>
+                  <td><input type="text" value="{{d.business_attribute_range_min}}" name="min" id="min" hidden="hidden">...</td>
+                  <td><input type="text" value="{{d.business_attribute_range_max}}" name="max" id="max" hidden="hidden">...</td>
+                  <td><input type="text" name="data_type" value="{{d.data_type}}" hidden="hidden">...</td>
+                  <td><input type="text" value="{{d.output_value}}" name="output_value" id="output_value"></td>
+                  <td><input type="text" name="effective_date" value="{{d.effective_date}}" hidden="hidden">...</td>
+                  <td><input type="text" name="expiration_date" value="{{d.expiration_date}}" hidden="hidden">...</td>
+                  <td><input type="text" name="hint" value="{{d.hint}}" hidden="hidden">...</td>
+                  <td><input type="text" name="org_id" value="{{d.org_id}}" hidden="hidden">...</td>
+              </tr>
+              {% elif d.data_type|lower == "float" %}
+              <tr>
+                  <td><input type="text" value="{{d.bh_configuration_detail_id}}" name="configuration_detail_id" hidden="hidden">...</td>
+                  <td><input type="text" value="{{d.bh_configuration_header_id}}" name="bh_configuration_header_id" hidden="hidden">...</td>
+                  <td><input type="text" name="configuration_name" value="{{d.configuration_name}}" hidden="hidden">...</td>
+                  <td><input type="text" name="business_topic" value="{{d.business_topic}}" hidden="hidden">...</td>
+                  <td><input type="text" name="business_attribute" values="{{d.business_attribute}}" hidden="hidden">...</td>
+                  <td><input type="text" name="business_attribute_value" value="{{d.business_attribute_value}}" hidden="hidden">...</td>
+                  <td><input type="text" value="{{d.business_attribute_range_min}}" name="min" id="min" hidden="hidden">...</td>
+                  <td><input type="text" value="{{d.business_attribute_range_max}}" name="max" id="max" hidden="hidden">...</td>
+                  <td><input type="text" name="data_type" value="{{d.data_type}}" hidden="hidden">...</td>
+                  <td><input type="text" value="{{d.output_value}}" name="output_value" id="output_value"></td>
+                  <td><input type="text" name="effective_date" value="{{d.effective_date}}" hidden="hidden">...</td>
+                  <td><input type="text" name="expiration_date" value="{{d.expiration_date}}" hidden="hidden">...</td>
+                  <td><input type="text" name="hint" value="{{d.hint}}" hidden="hidden">...</td>
+                  <td><input type="text" name="org_id" value="{{d.org_id}}" hidden="hidden">...</td>
+              </tr>
+          {% endif %}
+          {% endfor %}
         </table>
-        <table class="mainTable">
-          <tr>
-            <td colspan="4" align="right">EDIT</td>
-          </tr>
-          <tr>
-            <th>Xyz</th>
-            <th>Value</th>
-            <th>Output</th>
-          </tr>
-          <tr>
-            <td>....</td>
-            <td>....</td>
-            <td>....</td>
-          <tr>
-            <td>....</td>
-            <td>....</td>
-            <td>....</td>
-          </tr>
-        </table>
-    </div>
-
-    <div id="Partpackage" class="tabcontent">
-       <table class="mainTable">
-          <tr>
-            <td colspan="4" align="right">EDIT</td>
-          </tr>
-          <tr>
-            <th>Mode</th>
-            <th>Min</th>
-            <th>Max</th>
-            <th>Output</th>
-          </tr>
-          <tr>
-            <td>....</td>
-            <td>....</td>
-            <td>....</td>
-            <td>....</td>
-          </tr>
-          <tr>
-            <td>....</td>
-            <td>....</td>
-            <td>....</td>
-            <td>....</td>
-          </tr>
-        </table>
-        <table class="mainTable">
-          <tr>
-            <td colspan="4" align="right">EDIT</td>
-          </tr>
-          <tr>
-            <th>Xyz</th>
-            <th>Value</th>
-            <th>Output</th>
-          </tr>
-          <tr>
-            <td>....</td>
-            <td>....</td>
-            <td>....</td>
-          <tr>
-            <td>....</td>
-              <td>....</td>
-            <td>....</td>
-          </tr>
-        </table>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
     </div>
 
     <div id="Forecast" class="tabcontent">
+    <form method="post" action="/dashboard/home/">
+        {% csrf_token %}
        <table class="mainTable">
-          <tr>
-            <td colspan="4" align="right">EDIT</td>
+           <tr>
+            <td colspan="15" align="center">EDIT</td>
           </tr>
           <tr>
-            <th>Mode</th>
-            <th>Min</th>
-            <th>Max</th>
-            <th>Output</th>
+              <th>BH Configuration Detail ID</th>
+              <th>BH Configuration Header ID</th>
+              <th>Configuration Name</th>
+              <th>Business Topic</th>
+              <th>Business Attribute</th>
+              <th>Business Attribute Value</th>
+              <th>Business Attribute Range Min</th>
+              <th>Business Attribute Range Max</th>
+              <th>Data Type</th>
+              <th>Output Value</th>
+              <th>Effective Date</th>
+              <th>Expiration Date</th>
+              <th>Hint</th>
+              <th>Org ID</th>
           </tr>
-          <tr>
-            <td>....</td>
-            <td>....</td>
-            <td>....</td>
-            <td>....</td>
-          </tr>
-          <tr>
-            <td>....</td>
-            <td>....</td>
-            <td>....</td>
-            <td>....</td>
-          </tr>
+          {% for d in data %}
+          {% if d.data_type|lower == "none" %}
+              <tr>
+                  <td><input type="text" value="{{d.bh_configuration_detail_id}}" name="configuration_detail_id" ></td>
+                  <td><input type="text" value="{{d.bh_configuration_header_id}}" name="bh_configuration_header_id" ></td>
+                  <td><input type="text" name="configuration_name" value="{{d.configuration_name}}"></td>
+                  <td><input type="text" name="business_topic" value="{{d.business_topic}}" ></td>
+                  <td><input type="text" name="business_attribute" values="{{d.business_attribute}}" ></td>
+                  <td><input type="text" name="business_attribute_value" value="{{d.business_attribute_value}}" ></td>
+                  <td><input type="text" value="{{d.business_attribute_range_min}}" name="min" id="min"></td>
+                  <td><input type="text" value="{{d.business_attribute_range_max}}" name="max" id="max"></td>
+                  <td><input type="text" name="data_type" value="{{d.data_type}}" ></td>
+                  <td><input type="text" value="{{d.output_value}}" name="output_value" id="output_value"></td>
+                  <td><input type="text" name="effective_date" value="{{d.effective_date}}"></td>
+                  <td><input type="text" name="expiration_date" value="{{d.expiration_date}}"></td>
+                  <td><input type="text" name="hint" value="{{d.hint}}"></td>
+                  <td><input type="text" name="org_id" value="{{d.org_id}}"></td>
+              </tr>
+            {% elif d.data_type|lower == "text" %}
+              <tr>
+                  <td><input type="text" value="{{d.bh_configuration_detail_id}}" name="configuration_detail_id" ></td>
+                  <td><input type="text" value="{{d.bh_configuration_header_id}}" name="bh_configuration_header_id" ></td>
+                  <td><input type="text" name="configuration_name" value="{{d.configuration_name}}"></td>
+                  <td><input type="text" name="business_topic" value="{{d.business_topic}}" ></td>
+                  <td><input type="text" name="business_attribute" values="{{d.business_attribute}}" ></td>
+                  <td><input type="text" name="business_attribute_value" value="{{d.business_attribute_value}}" ></td>
+                  <td><input type="text" value="{{d.business_attribute_range_min}}" name="min" id="min"></td>
+                  <td><input type="text" value="{{d.business_attribute_range_max}}" name="max" id="max"></td>
+                  <td><input type="text" name="data_type" value="{{d.data_type}}" ></td>
+                  <td><input type="text" value="{{d.output_value}}" name="output_value" id="output_value"></td>
+                  <td><input type="text" name="effective_date" value="{{d.effective_date}}"></td>
+                  <td><input type="text" name="expiration_date" value="{{d.expiration_date}}"></td>
+                  <td><input type="text" name="hint" value="{{d.hint}}"></td>
+                  <td><input type="text" name="org_id" value="{{d.org_id}}"></td>
+              </tr>
+              {% elif d.data_type|lower == "range" %}
+              <tr>
+                  <td><input type="text" value="{{d.bh_configuration_detail_id}}" name="configuration_detail_id" hidden="hidden">...</td>
+                  <td><input type="text" value="{{d.bh_configuration_header_id}}" name="bh_configuration_header_id" hidden="hidden">...</td>
+                  <td><input type="text" name="configuration_name" value="{{d.configuration_name}}" hidden="hidden">...</td>
+                  <td><input type="text" name="business_topic" value="{{d.business_topic}}" hidden="hidden">...</td>
+                  <td><input type="text" name="business_attribute" values="{{d.business_attribute}}" hidden="hidden">...</td>
+                  <td><input type="text" name="business_attribute_value" value="{{d.business_attribute_value}}" hidden="hidden">...</td>
+                  <td><input type="text" value="{{d.business_attribute_range_min}}" name="min" id="min"></td>
+                  <td><input type="text" value="{{d.business_attribute_range_max}}" name="max" id="max"></td>
+                  <td><input type="text" name="data_type" value="{{d.data_type}}" hidden="hidden">...</td>
+                  <td><input type="text" value="{{d.output_value}}" name="output_value" id="output_value"></td>
+                  <td><input type="text" name="effective_date" value="{{d.effective_date}}" hidden="hidden">...</td>
+                  <td><input type="text" name="expiration_date" value="{{d.expiration_date}}" hidden="hidden">...</td>
+                  <td><input type="text" name="hint" value="{{d.hint}}" hidden="hidden">...</td>
+                  <td><input type="text" name="org_id" value="{{d.org_id}}" hidden="hidden">...</td>
+              </tr>
+              {% elif d.data_type|lower == "action" %}
+              <tr>
+                  <td><input type="text" value="{{d.bh_configuration_detail_id}}" name="configuration_detail_id" hidden="hidden">...</td>
+                  <td><input type="text" value="{{d.bh_configuration_header_id}}" name="bh_configuration_header_id" hidden="hidden">...</td>
+                  <td><input type="text" name="configuration_name" value="{{d.configuration_name}}" hidden="hidden">...</td>
+                  <td><input type="text" name="business_topic" value="{{d.business_topic}}" hidden="hidden">...</td>
+                  <td><input type="text" name="business_attribute" values="{{d.business_attribute}}" hidden="hidden">...</td>
+                  <td><input type="text" name="business_attribute_value" value="{{d.business_attribute_value}}" hidden="hidden">...</td>
+                  <td><input type="text" value="{{d.business_attribute_range_min}}" name="min" id="min" hidden="hidden">...</td>
+                  <td><input type="text" value="{{d.business_attribute_range_max}}" name="max" id="max" hidden="hidden">...</td>
+                  <td><input type="text" name="data_type" value="{{d.data_type}}" hidden="hidden">...</td>
+                  <td><input type="text" value="{{d.output_value}}" name="output_value" id="output_value"></td>
+                  <td><input type="text" name="effective_date" value="{{d.effective_date}}" hidden="hidden">...</td>
+                  <td><input type="text" name="expiration_date" value="{{d.expiration_date}}" hidden="hidden">...</td>
+                  <td><input type="text" name="hint" value="{{d.hint}}" hidden="hidden">...</td>
+                  <td><input type="text" name="org_id" value="{{d.org_id}}" hidden="hidden">...</td>
+              </tr>
+              {% elif d.data_type|lower == "float" %}
+              <tr>
+                  <td><input type="text" value="{{d.bh_configuration_detail_id}}" name="configuration_detail_id" hidden="hidden">...</td>
+                  <td><input type="text" value="{{d.bh_configuration_header_id}}" name="bh_configuration_header_id" hidden="hidden">...</td>
+                  <td><input type="text" name="configuration_name" value="{{d.configuration_name}}" hidden="hidden">...</td>
+                  <td><input type="text" name="business_topic" value="{{d.business_topic}}" hidden="hidden">...</td>
+                  <td><input type="text" name="business_attribute" values="{{d.business_attribute}}" hidden="hidden">...</td>
+                  <td><input type="text" name="business_attribute_value" value="{{d.business_attribute_value}}" hidden="hidden">...</td>
+                  <td><input type="text" value="{{d.business_attribute_range_min}}" name="min" id="min" hidden="hidden">...</td>
+                  <td><input type="text" value="{{d.business_attribute_range_max}}" name="max" id="max" hidden="hidden">...</td>
+                  <td><input type="text" name="data_type" value="{{d.data_type}}" hidden="hidden">...</td>
+                  <td><input type="text" value="{{d.output_value}}" name="output_value" id="output_value"></td>
+                  <td><input type="text" name="effective_date" value="{{d.effective_date}}" hidden="hidden">...</td>
+                  <td><input type="text" name="expiration_date" value="{{d.expiration_date}}" hidden="hidden">...</td>
+                  <td><input type="text" name="hint" value="{{d.hint}}" hidden="hidden">...</td>
+                  <td><input type="text" name="org_id" value="{{d.org_id}}" hidden="hidden">...</td>
+              </tr>
+          {% endif %}
+          {% endfor %}
         </table>
-        <table class="mainTable">
-          <tr>
-            <td colspan="4" align="right">EDIT</td>
-          </tr>
-          <tr>
-            <th>Xyz</th>
-            <th>Value</th>
-            <th>Output</th>
-          </tr>
-          <tr>
-            <td>....</td>
-            <td>....</td>
-            <td>....</td>
-          <tr>
-            <td>....</td>
-            <td>....</td>
-            <td>....</td>
-          </tr>
-        </table>
+        <button type="submit" class="btn btn-primary">Submit</form>
+    </form>
     </div>
 
     <div id="Planning" class="tabcontent">
+        <form method="post" action="/dashboard/home/">
+            {% csrf_token %}
        <table class="mainTable">
-          <tr>
-            <td colspan="4" align="right">EDIT</td>
+           <tr>
+            <td colspan="15" align="center">EDIT</td>
           </tr>
           <tr>
-            <th>Mode</th>
-            <th>Min</th>
-            <th>Max</th>
-            <th>Output</th>
+              <th>BH Configuration Detail ID</th>
+              <th>BH Configuration Header ID</th>
+              <th>Configuration Name</th>
+              <th>Business Topic</th>
+              <th>Business Attribute</th>
+              <th>Business Attribute Value</th>
+              <th>Business Attribute Range Min</th>
+              <th>Business Attribute Range Max</th>
+              <th>Data Type</th>
+              <th>Output Value</th>
+              <th>Effective Date</th>
+              <th>Expiration Date</th>
+              <th>Hint</th>
+              <th>Org ID</th>
           </tr>
-          <tr>
-            <td>....</td>
-            <td>....</td>
-            <td>....</td>
-            <td>....</td>
-          </tr>
-          <tr>
-            <td>....</td>
-            <td>....</td>
-            <td>....</td>
-            <td>....</td>
-          </tr>
+          {% for d in data %}
+          {% if d.data_type|lower == "none" %}
+              <tr>
+                  <td><input type="text" value="{{d.bh_configuration_detail_id}}" name="configuration_detail_id" ></td>
+                  <td><input type="text" value="{{d.bh_configuration_header_id}}" name="bh_configuration_header_id" ></td>
+                  <td><input type="text" name="configuration_name" value="{{d.configuration_name}}"></td>
+                  <td><input type="text" name="business_topic" value="{{d.business_topic}}" ></td>
+                  <td><input type="text" name="business_attribute" values="{{d.business_attribute}}" ></td>
+                  <td><input type="text" name="business_attribute_value" value="{{d.business_attribute_value}}" ></td>
+                  <td><input type="text" value="{{d.business_attribute_range_min}}" name="min" id="min"></td>
+                  <td><input type="text" value="{{d.business_attribute_range_max}}" name="max" id="max"></td>
+                  <td><input type="text" name="data_type" value="{{d.data_type}}" ></td>
+                  <td><input type="text" value="{{d.output_value}}" name="output_value" id="output_value"></td>
+                  <td><input type="text" name="effective_date" value="{{d.effective_date}}"></td>
+                  <td><input type="text" name="expiration_date" value="{{d.expiration_date}}"></td>
+                  <td><input type="text" name="hint" value="{{d.hint}}"></td>
+                  <td><input type="text" name="org_id" value="{{d.org_id}}"></td>
+              </tr>
+            {% elif d.data_type|lower == "text" %}
+              <tr>
+                  <td><input type="text" value="{{d.bh_configuration_detail_id}}" name="configuration_detail_id" ></td>
+                  <td><input type="text" value="{{d.bh_configuration_header_id}}" name="bh_configuration_header_id" ></td>
+                  <td><input type="text" name="configuration_name" value="{{d.configuration_name}}"></td>
+                  <td><input type="text" name="business_topic" value="{{d.business_topic}}" ></td>
+                  <td><input type="text" name="business_attribute" values="{{d.business_attribute}}" ></td>
+                  <td><input type="text" name="business_attribute_value" value="{{d.business_attribute_value}}" ></td>
+                  <td><input type="text" value="{{d.business_attribute_range_min}}" name="min" id="min"></td>
+                  <td><input type="text" value="{{d.business_attribute_range_max}}" name="max" id="max"></td>
+                  <td><input type="text" name="data_type" value="{{d.data_type}}" ></td>
+                  <td><input type="text" value="{{d.output_value}}" name="output_value" id="output_value"></td>
+                  <td><input type="text" name="effective_date" value="{{d.effective_date}}"></td>
+                  <td><input type="text" name="expiration_date" value="{{d.expiration_date}}"></td>
+                  <td><input type="text" name="hint" value="{{d.hint}}"></td>
+                  <td><input type="text" name="org_id" value="{{d.org_id}}"></td>
+              </tr>
+              {% elif d.data_type|lower == "range" %}
+              <tr>
+                  <td><input type="text" value="{{d.bh_configuration_detail_id}}" name="configuration_detail_id" hidden="hidden">...</td>
+                  <td><input type="text" value="{{d.bh_configuration_header_id}}" name="bh_configuration_header_id" hidden="hidden">...</td>
+                  <td><input type="text" name="configuration_name" value="{{d.configuration_name}}" hidden="hidden">...</td>
+                  <td><input type="text" name="business_topic" value="{{d.business_topic}}" hidden="hidden">...</td>
+                  <td><input type="text" name="business_attribute" values="{{d.business_attribute}}" hidden="hidden">...</td>
+                  <td><input type="text" name="business_attribute_value" value="{{d.business_attribute_value}}" hidden="hidden">...</td>
+                  <td><input type="text" value="{{d.business_attribute_range_min}}" name="min" id="min"></td>
+                  <td><input type="text" value="{{d.business_attribute_range_max}}" name="max" id="max"></td>
+                  <td><input type="text" name="data_type" value="{{d.data_type}}" hidden="hidden">...</td>
+                  <td><input type="text" value="{{d.output_value}}" name="output_value" id="output_value"></td>
+                  <td><input type="text" name="effective_date" value="{{d.effective_date}}" hidden="hidden">...</td>
+                  <td><input type="text" name="expiration_date" value="{{d.expiration_date}}" hidden="hidden">...</td>
+                  <td><input type="text" name="hint" value="{{d.hint}}" hidden="hidden">...</td>
+                  <td><input type="text" name="org_id" value="{{d.org_id}}" hidden="hidden">...</td>
+              </tr>
+              {% elif d.data_type|lower == "action" %}
+              <tr>
+                  <td><input type="text" value="{{d.bh_configuration_detail_id}}" name="configuration_detail_id" hidden="hidden">...</td>
+                  <td><input type="text" value="{{d.bh_configuration_header_id}}" name="bh_configuration_header_id" hidden="hidden">...</td>
+                  <td><input type="text" name="configuration_name" value="{{d.configuration_name}}" hidden="hidden">...</td>
+                  <td><input type="text" name="business_topic" value="{{d.business_topic}}" hidden="hidden">...</td>
+                  <td><input type="text" name="business_attribute" values="{{d.business_attribute}}" hidden="hidden">...</td>
+                  <td><input type="text" name="business_attribute_value" value="{{d.business_attribute_value}}" hidden="hidden">...</td>
+                  <td><input type="text" value="{{d.business_attribute_range_min}}" name="min" id="min" hidden="hidden">...</td>
+                  <td><input type="text" value="{{d.business_attribute_range_max}}" name="max" id="max" hidden="hidden">...</td>
+                  <td><input type="text" name="data_type" value="{{d.data_type}}" hidden="hidden">...</td>
+                  <td><input type="text" value="{{d.output_value}}" name="output_value" id="output_value"></td>
+                  <td><input type="text" name="effective_date" value="{{d.effective_date}}" hidden="hidden">...</td>
+                  <td><input type="text" name="expiration_date" value="{{d.expiration_date}}" hidden="hidden">...</td>
+                  <td><input type="text" name="hint" value="{{d.hint}}" hidden="hidden">...</td>
+                  <td><input type="text" name="org_id" value="{{d.org_id}}" hidden="hidden">...</td>
+              </tr>
+              {% elif d.data_type|lower == "float" %}
+              <tr>
+                  <td><input type="text" value="{{d.bh_configuration_detail_id}}" name="configuration_detail_id" hidden="hidden">...</td>
+                  <td><input type="text" value="{{d.bh_configuration_header_id}}" name="bh_configuration_header_id" hidden="hidden">...</td>
+                  <td><input type="text" name="configuration_name" value="{{d.configuration_name}}" hidden="hidden">...</td>
+                  <td><input type="text" name="business_topic" value="{{d.business_topic}}" hidden="hidden">...</td>
+                  <td><input type="text" name="business_attribute" values="{{d.business_attribute}}" hidden="hidden">...</td>
+                  <td><input type="text" name="business_attribute_value" value="{{d.business_attribute_value}}" hidden="hidden">...</td>
+                  <td><input type="text" value="{{d.business_attribute_range_min}}" name="min" id="min" hidden="hidden">...</td>
+                  <td><input type="text" value="{{d.business_attribute_range_max}}" name="max" id="max" hidden="hidden">...</td>
+                  <td><input type="text" name="data_type" value="{{d.data_type}}" hidden="hidden">...</td>
+                  <td><input type="text" value="{{d.output_value}}" name="output_value" id="output_value"></td>
+                  <td><input type="text" name="effective_date" value="{{d.effective_date}}" hidden="hidden">...</td>
+                  <td><input type="text" name="expiration_date" value="{{d.expiration_date}}" hidden="hidden">...</td>
+                  <td><input type="text" name="hint" value="{{d.hint}}" hidden="hidden">...</td>
+                  <td><input type="text" name="org_id" value="{{d.org_id}}" hidden="hidden">...</td>
+              </tr>
+          {% endif %}
+          {% endfor %}
         </table>
-        <table class="mainTable">
-          <tr>
-            <td colspan="4" align="right">EDIT</td>
-          </tr>
-          <tr>
-            <th>Xyz</th>
-            <th>Value</th>
-            <th>Output</th>
-          </tr>
-          <tr>
-            <td>....</td>
-            <td>....</td>
-            <td>....</td>
-          <tr>
-            <td>....</td>
-            <td>....</td>
-            <td>....</td>
-          </tr>
-        </table>
+        <button type="submit" class="btn btn-primary">Submit</form>
     </div>
 
     <div id="Rates" class="tabcontent">
        <table class="mainTable">
-          <tr>
-            <td colspan="4" align="right">EDIT</td>
+           <tr>
+            <td colspan="15" align="center">EDIT</td>
           </tr>
           <tr>
-            <th>Mode</th>
-            <th>Min</th>
-            <th>Max</th>
-            <th>Output</th>
+              <th>BH Configuration Detail ID</th>
+              <th>BH Configuration Header ID</th>
+              <th>Configuration Name</th>
+              <th>Business Topic</th>
+              <th>Business Attribute</th>
+              <th>Business Attribute Value</th>
+              <th>Business Attribute Range Min</th>
+              <th>Business Attribute Range Max</th>
+              <th>Data Type</th>
+              <th>Output Value</th>
+              <th>Effective Date</th>
+              <th>Expiration Date</th>
+              <th>Hint</th>
+              <th>Org ID</th>
           </tr>
-          <tr>
-            <td>....</td>
-            <td>....</td>
-            <td>....</td>
-            <td>....</td>
-          </tr>
-          <tr>
-            <td>....</td>
-            <td>....</td>
-            <td>....</td>
-            <td>....</td>
-          </tr>
+          {% for d in data %}
+          {% if d.data_type|lower == "none" %}
+              <tr>
+                  <td><input type="text" value="{{d.bh_configuration_detail_id}}" name="configuration_detail_id" ></td>
+                  <td><input type="text" value="{{d.bh_configuration_header_id}}" name="bh_configuration_header_id" ></td>
+                  <td><input type="text" name="configuration_name" value="{{d.configuration_name}}"></td>
+                  <td><input type="text" name="business_topic" value="{{d.business_topic}}" ></td>
+                  <td><input type="text" name="business_attribute" values="{{d.business_attribute}}" ></td>
+                  <td><input type="text" name="business_attribute_value" value="{{d.business_attribute_value}}" ></td>
+                  <td><input type="text" value="{{d.business_attribute_range_min}}" name="min" id="min"></td>
+                  <td><input type="text" value="{{d.business_attribute_range_max}}" name="max" id="max"></td>
+                  <td><input type="text" name="data_type" value="{{d.data_type}}" ></td>
+                  <td><input type="text" value="{{d.output_value}}" name="output_value" id="output_value"></td>
+                  <td><input type="text" name="effective_date" value="{{d.effective_date}}"></td>
+                  <td><input type="text" name="expiration_date" value="{{d.expiration_date}}"></td>
+                  <td><input type="text" name="hint" value="{{d.hint}}"></td>
+                  <td><input type="text" name="org_id" value="{{d.org_id}}"></td>
+              </tr>
+            {% elif d.data_type|lower == "text" %}
+              <tr>
+                  <td><input type="text" value="{{d.bh_configuration_detail_id}}" name="configuration_detail_id" ></td>
+                  <td><input type="text" value="{{d.bh_configuration_header_id}}" name="bh_configuration_header_id" ></td>
+                  <td><input type="text" name="configuration_name" value="{{d.configuration_name}}"></td>
+                  <td><input type="text" name="business_topic" value="{{d.business_topic}}" ></td>
+                  <td><input type="text" name="business_attribute" values="{{d.business_attribute}}" ></td>
+                  <td><input type="text" name="business_attribute_value" value="{{d.business_attribute_value}}" ></td>
+                  <td><input type="text" value="{{d.business_attribute_range_min}}" name="min" id="min"></td>
+                  <td><input type="text" value="{{d.business_attribute_range_max}}" name="max" id="max"></td>
+                  <td><input type="text" name="data_type" value="{{d.data_type}}" ></td>
+                  <td><input type="text" value="{{d.output_value}}" name="output_value" id="output_value"></td>
+                  <td><input type="text" name="effective_date" value="{{d.effective_date}}"></td>
+                  <td><input type="text" name="expiration_date" value="{{d.expiration_date}}"></td>
+                  <td><input type="text" name="hint" value="{{d.hint}}"></td>
+                  <td><input type="text" name="org_id" value="{{d.org_id}}"></td>
+              </tr>
+              {% elif d.data_type|lower == "range" %}
+              <tr>
+                  <td><input type="text" value="{{d.bh_configuration_detail_id}}" name="configuration_detail_id" hidden="hidden">...</td>
+                  <td><input type="text" value="{{d.bh_configuration_header_id}}" name="bh_configuration_header_id" hidden="hidden">...</td>
+                  <td><input type="text" name="configuration_name" value="{{d.configuration_name}}" hidden="hidden">...</td>
+                  <td><input type="text" name="business_topic" value="{{d.business_topic}}" hidden="hidden">...</td>
+                  <td><input type="text" name="business_attribute" values="{{d.business_attribute}}" hidden="hidden">...</td>
+                  <td><input type="text" name="business_attribute_value" value="{{d.business_attribute_value}}" hidden="hidden">...</td>
+                  <td><input type="text" value="{{d.business_attribute_range_min}}" name="min" id="min"></td>
+                  <td><input type="text" value="{{d.business_attribute_range_max}}" name="max" id="max"></td>
+                  <td><input type="text" name="data_type" value="{{d.data_type}}" hidden="hidden">...</td>
+                  <td><input type="text" value="{{d.output_value}}" name="output_value" id="output_value"></td>
+                  <td><input type="text" name="effective_date" value="{{d.effective_date}}" hidden="hidden">...</td>
+                  <td><input type="text" name="expiration_date" value="{{d.expiration_date}}" hidden="hidden">...</td>
+                  <td><input type="text" name="hint" value="{{d.hint}}" hidden="hidden">...</td>
+                  <td><input type="text" name="org_id" value="{{d.org_id}}" hidden="hidden">...</td>
+              </tr>
+              {% elif d.data_type|lower == "action" %}
+              <tr>
+                  <td><input type="text" value="{{d.bh_configuration_detail_id}}" name="configuration_detail_id" hidden="hidden">...</td>
+                  <td><input type="text" value="{{d.bh_configuration_header_id}}" name="bh_configuration_header_id" hidden="hidden">...</td>
+                  <td><input type="text" name="configuration_name" value="{{d.configuration_name}}" hidden="hidden">...</td>
+                  <td><input type="text" name="business_topic" value="{{d.business_topic}}" hidden="hidden">...</td>
+                  <td><input type="text" name="business_attribute" values="{{d.business_attribute}}" hidden="hidden">...</td>
+                  <td><input type="text" name="business_attribute_value" value="{{d.business_attribute_value}}" hidden="hidden">...</td>
+                  <td><input type="text" value="{{d.business_attribute_range_min}}" name="min" id="min" hidden="hidden">...</td>
+                  <td><input type="text" value="{{d.business_attribute_range_max}}" name="max" id="max" hidden="hidden">...</td>
+                  <td><input type="text" name="data_type" value="{{d.data_type}}" hidden="hidden">...</td>
+                  <td><input type="text" value="{{d.output_value}}" name="output_value" id="output_value"></td>
+                  <td><input type="text" name="effective_date" value="{{d.effective_date}}" hidden="hidden">...</td>
+                  <td><input type="text" name="expiration_date" value="{{d.expiration_date}}" hidden="hidden">...</td>
+                  <td><input type="text" name="hint" value="{{d.hint}}" hidden="hidden">...</td>
+                  <td><input type="text" name="org_id" value="{{d.org_id}}" hidden="hidden">...</td>
+              </tr>
+              {% elif d.data_type|lower == "float" %}
+              <tr>
+                  <td><input type="text" value="{{d.bh_configuration_detail_id}}" name="configuration_detail_id" hidden="hidden">...</td>
+                  <td><input type="text" value="{{d.bh_configuration_header_id}}" name="bh_configuration_header_id" hidden="hidden">...</td>
+                  <td><input type="text" name="configuration_name" value="{{d.configuration_name}}" hidden="hidden">...</td>
+                  <td><input type="text" name="business_topic" value="{{d.business_topic}}" hidden="hidden">...</td>
+                  <td><input type="text" name="business_attribute" values="{{d.business_attribute}}" hidden="hidden">...</td>
+                  <td><input type="text" name="business_attribute_value" value="{{d.business_attribute_value}}" hidden="hidden">...</td>
+                  <td><input type="text" value="{{d.business_attribute_range_min}}" name="min" id="min" hidden="hidden">...</td>
+                  <td><input type="text" value="{{d.business_attribute_range_max}}" name="max" id="max" hidden="hidden">...</td>
+                  <td><input type="text" name="data_type" value="{{d.data_type}}" hidden="hidden">...</td>
+                  <td><input type="text" value="{{d.output_value}}" name="output_value" id="output_value"></td>
+                  <td><input type="text" name="effective_date" value="{{d.effective_date}}" hidden="hidden">...</td>
+                  <td><input type="text" name="expiration_date" value="{{d.expiration_date}}" hidden="hidden">...</td>
+                  <td><input type="text" name="hint" value="{{d.hint}}" hidden="hidden">...</td>
+                  <td><input type="text" name="org_id" value="{{d.org_id}}" hidden="hidden">...</td>
+              </tr>
+          {% endif %}
+          {% endfor %}
         </table>
-        <table class="mainTable">
-          <tr>
-            <td colspan="4" align="right">EDIT</td>
+        <button type="submit" class="btn btn-primary">Submit</form>
+        </form>
+    </div>
+    <div id="Partpackage" class="tabcontent">
+       <table class="mainTable">
+           <tr>
+            <td colspan="15" align="center">EDIT</td>
           </tr>
           <tr>
-            <th>Xyz</th>
-            <th>Value</th>
-            <th>Output</th>
+              <th>BH Configuration Detail ID</th>
+              <th>BH Configuration Header ID</th>
+              <th>Configuration Name</th>
+              <th>Business Topic</th>
+              <th>Business Attribute</th>
+              <th>Business Attribute Value</th>
+              <th>Business Attribute Range Min</th>
+              <th>Business Attribute Range Max</th>
+              <th>Data Type</th>
+              <th>Output Value</th>
+              <th>Effective Date</th>
+              <th>Expiration Date</th>
+              <th>Hint</th>
+              <th>Org ID</th>
           </tr>
-          <tr>
-            <td>....</td>
-            <td>....</td>
-            <td>....</td>
-          <tr>
-            <td>....</td>
-            <td>....</td>
-            <td>....</td>
-          </tr>
+          {% for d in data %}
+          {% if d.data_type|lower == "none" %}
+              <tr>
+                  <td><input type="text" value="{{d.bh_configuration_detail_id}}" name="configuration_detail_id" ></td>
+                  <td><input type="text" value="{{d.bh_configuration_header_id}}" name="bh_configuration_header_id" ></td>
+                  <td><input type="text" name="configuration_name" value="{{d.configuration_name}}"></td>
+                  <td><input type="text" name="business_topic" value="{{d.business_topic}}" ></td>
+                  <td><input type="text" name="business_attribute" values="{{d.business_attribute}}" ></td>
+                  <td><input type="text" name="business_attribute_value" value="{{d.business_attribute_value}}" ></td>
+                  <td><input type="text" value="{{d.business_attribute_range_min}}" name="min" id="min"></td>
+                  <td><input type="text" value="{{d.business_attribute_range_max}}" name="max" id="max"></td>
+                  <td><input type="text" name="data_type" value="{{d.data_type}}" ></td>
+                  <td><input type="text" value="{{d.output_value}}" name="output_value" id="output_value"></td>
+                  <td><input type="text" name="effective_date" value="{{d.effective_date}}"></td>
+                  <td><input type="text" name="expiration_date" value="{{d.expiration_date}}"></td>
+                  <td><input type="text" name="hint" value="{{d.hint}}"></td>
+                  <td><input type="text" name="org_id" value="{{d.org_id}}"></td>
+              </tr>
+            {% elif d.data_type|lower == "text" %}
+              <tr>
+                  <td><input type="text" value="{{d.bh_configuration_detail_id}}" name="configuration_detail_id" ></td>
+                  <td><input type="text" value="{{d.bh_configuration_header_id}}" name="bh_configuration_header_id" ></td>
+                  <td><input type="text" name="configuration_name" value="{{d.configuration_name}}"></td>
+                  <td><input type="text" name="business_topic" value="{{d.business_topic}}" ></td>
+                  <td><input type="text" name="business_attribute" values="{{d.business_attribute}}" ></td>
+                  <td><input type="text" name="business_attribute_value" value="{{d.business_attribute_value}}" ></td>
+                  <td><input type="text" value="{{d.business_attribute_range_min}}" name="min" id="min"></td>
+                  <td><input type="text" value="{{d.business_attribute_range_max}}" name="max" id="max"></td>
+                  <td><input type="text" name="data_type" value="{{d.data_type}}" ></td>
+                  <td><input type="text" value="{{d.output_value}}" name="output_value" id="output_value"></td>
+                  <td><input type="text" name="effective_date" value="{{d.effective_date}}"></td>
+                  <td><input type="text" name="expiration_date" value="{{d.expiration_date}}"></td>
+                  <td><input type="text" name="hint" value="{{d.hint}}"></td>
+                  <td><input type="text" name="org_id" value="{{d.org_id}}"></td>
+              </tr>
+              {% elif d.data_type|lower == "range" %}
+              <tr>
+                  <td><input type="text" value="{{d.bh_configuration_detail_id}}" name="configuration_detail_id" hidden="hidden">...</td>
+                  <td><input type="text" value="{{d.bh_configuration_header_id}}" name="bh_configuration_header_id" hidden="hidden">...</td>
+                  <td><input type="text" name="configuration_name" value="{{d.configuration_name}}" hidden="hidden">...</td>
+                  <td><input type="text" name="business_topic" value="{{d.business_topic}}" hidden="hidden">...</td>
+                  <td><input type="text" name="business_attribute" values="{{d.business_attribute}}" hidden="hidden">...</td>
+                  <td><input type="text" name="business_attribute_value" value="{{d.business_attribute_value}}" hidden="hidden">...</td>
+                  <td><input type="text" value="{{d.business_attribute_range_min}}" name="min" id="min"></td>
+                  <td><input type="text" value="{{d.business_attribute_range_max}}" name="max" id="max"></td>
+                  <td><input type="text" name="data_type" value="{{d.data_type}}" hidden="hidden">...</td>
+                  <td><input type="text" value="{{d.output_value}}" name="output_value" id="output_value"></td>
+                  <td><input type="text" name="effective_date" value="{{d.effective_date}}" hidden="hidden">...</td>
+                  <td><input type="text" name="expiration_date" value="{{d.expiration_date}}" hidden="hidden">...</td>
+                  <td><input type="text" name="hint" value="{{d.hint}}" hidden="hidden">...</td>
+                  <td><input type="text" name="org_id" value="{{d.org_id}}" hidden="hidden">...</td>
+              </tr>
+              {% elif d.data_type|lower == "action" %}
+              <tr>
+                  <td><input type="text" value="{{d.bh_configuration_detail_id}}" name="configuration_detail_id" hidden="hidden">...</td>
+                  <td><input type="text" value="{{d.bh_configuration_header_id}}" name="bh_configuration_header_id" hidden="hidden">...</td>
+                  <td><input type="text" name="configuration_name" value="{{d.configuration_name}}" hidden="hidden">...</td>
+                  <td><input type="text" name="business_topic" value="{{d.business_topic}}" hidden="hidden">...</td>
+                  <td><input type="text" name="business_attribute" values="{{d.business_attribute}}" hidden="hidden">...</td>
+                  <td><input type="text" name="business_attribute_value" value="{{d.business_attribute_value}}" hidden="hidden">...</td>
+                  <td><input type="text" value="{{d.business_attribute_range_min}}" name="min" id="min" hidden="hidden">...</td>
+                  <td><input type="text" value="{{d.business_attribute_range_max}}" name="max" id="max" hidden="hidden">...</td>
+                  <td><input type="text" name="data_type" value="{{d.data_type}}" hidden="hidden">...</td>
+                  <td><input type="text" value="{{d.output_value}}" name="output_value" id="output_value"></td>
+                  <td><input type="text" name="effective_date" value="{{d.effective_date}}" hidden="hidden">...</td>
+                  <td><input type="text" name="expiration_date" value="{{d.expiration_date}}" hidden="hidden">...</td>
+                  <td><input type="text" name="hint" value="{{d.hint}}" hidden="hidden">...</td>
+                  <td><input type="text" name="org_id" value="{{d.org_id}}" hidden="hidden">...</td>
+              </tr>
+              {% elif d.data_type|lower == "float" %}
+              <tr>
+                  <td><input type="text" value="{{d.bh_configuration_detail_id}}" name="configuration_detail_id" hidden="hidden">...</td>
+                  <td><input type="text" value="{{d.bh_configuration_header_id}}" name="bh_configuration_header_id" hidden="hidden">...</td>
+                  <td><input type="text" name="configuration_name" value="{{d.configuration_name}}" hidden="hidden">...</td>
+                  <td><input type="text" name="business_topic" value="{{d.business_topic}}" hidden="hidden">...</td>
+                  <td><input type="text" name="business_attribute" values="{{d.business_attribute}}" hidden="hidden">...</td>
+                  <td><input type="text" name="business_attribute_value" value="{{d.business_attribute_value}}" hidden="hidden">...</td>
+                  <td><input type="text" value="{{d.business_attribute_range_min}}" name="min" id="min" hidden="hidden">...</td>
+                  <td><input type="text" value="{{d.business_attribute_range_max}}" name="max" id="max" hidden="hidden">...</td>
+                  <td><input type="text" name="data_type" value="{{d.data_type}}" hidden="hidden">...</td>
+                  <td><input type="text" value="{{d.output_value}}" name="output_value" id="output_value"></td>
+                  <td><input type="text" name="effective_date" value="{{d.effective_date}}" hidden="hidden">...</td>
+                  <td><input type="text" name="expiration_date" value="{{d.expiration_date}}" hidden="hidden">...</td>
+                  <td><input type="text" name="hint" value="{{d.hint}}" hidden="hidden">...</td>
+                  <td><input type="text" name="org_id" value="{{d.org_id}}" hidden="hidden">...</td>
+              </tr>
+          {% endif %}
+          {% endfor %}
         </table>
+        <button type="submit" class="btn btn-primary">Submit</form>
+        </form>
     </div>
 {% endblock %}
 
