@@ -1,0 +1,14 @@
+check data type 
+	if data type == "None"
+		display everything
+		editable fields 
+	if data type == "range":
+		minimum, maximum, outpu_value
+	if data type == "float"
+		output_value
+	if data type == "action"
+		value
+		output 
+	if data type == "text":
+		everything 
+		display everything.
