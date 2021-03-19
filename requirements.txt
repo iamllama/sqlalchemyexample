@@ -1,6 +1,6 @@
 backcall==0.1.0
 decorator==4.4.0
-Django==2.2.6
+Django==2.2.18
 django-extensions==2.2.5
 freeze==1.0.10
 ipython==7.8.0
